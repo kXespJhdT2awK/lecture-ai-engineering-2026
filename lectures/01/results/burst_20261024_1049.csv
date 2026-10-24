@@ -1,0 +1,31 @@
+model,question,trial,status,latency_s,prompt_tokens,output_tokens,thoughts_tokens,total_tokens,chars,error
+gemini-3.5-flash-lite,short,1,200,1.14,14,1,0,15,2,
+gemini-3.5-flash-lite,short,2,200,0.86,14,1,0,15,2,
+gemini-3.5-flash-lite,short,3,200,0.7,14,1,0,15,2,
+gemini-3.5-flash-lite,short,4,200,0.99,14,1,0,15,2,
+gemini-3.5-flash-lite,short,5,200,0.88,14,1,0,15,2,
+gemini-3.5-flash-lite,short,6,200,0.83,14,1,0,15,2,
+gemini-3.5-flash-lite,short,7,200,0.93,14,1,0,15,2,
+gemini-3.5-flash-lite,short,8,200,0.86,14,1,0,15,2,
+gemini-3.5-flash-lite,short,9,200,0.92,14,1,0,15,2,
+gemini-3.5-flash-lite,short,10,200,0.74,14,1,0,15,2,
+gemini-3.5-flash-lite,short,11,200,0.54,14,1,0,15,2,
+gemini-3.5-flash-lite,short,12,200,0.66,14,1,0,15,2,
+gemini-3.5-flash-lite,short,13,200,0.98,14,1,0,15,2,
+gemini-3.5-flash-lite,short,14,200,0.88,14,1,0,15,2,
+gemini-3.5-flash-lite,short,15,200,0.78,14,1,0,15,2,
+gemini-3.5-flash-lite,short,16,200,0.95,14,1,0,15,2,
+gemini-3.5-flash-lite,short,17,429,0.26,,,,,,"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to"
+gemini-3.5-flash-lite,short,18,200,0.9,14,1,0,15,2,
+gemini-3.5-flash-lite,short,19,429,0.32,,,,,,"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to"
+gemini-3.5-flash-lite,short,20,429,0.31,,,,,,"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to"
+gemini-3.5-flash-lite,short,21,429,0.29,,,,,,"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to"
+gemini-3.5-flash-lite,short,22,429,0.29,,,,,,"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to"
+gemini-3.5-flash-lite,short,23,429,0.3,,,,,,"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to"
+gemini-3.5-flash-lite,short,24,429,0.23,,,,,,"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to"
+gemini-3.5-flash-lite,short,25,429,0.26,,,,,,"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to"
+gemini-3.5-flash-lite,short,26,429,0.31,,,,,,"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to"
+gemini-3.5-flash-lite,short,27,429,0.25,,,,,,"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to"
+gemini-3.5-flash-lite,short,28,429,0.28,,,,,,"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to"
+gemini-3.5-flash-lite,short,29,429,0.29,,,,,,"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to"
+gemini-3.5-flash-lite,short,30,429,0.22,,,,,,"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to"

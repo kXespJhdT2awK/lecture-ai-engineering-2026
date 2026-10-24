@@ -1,0 +1,46 @@
+model,question,trial,status,latency_s,prompt_tokens,output_tokens,thoughts_tokens,total_tokens,chars,error
+gemini-3.5-flash-lite,general,1,200,7.97,7,761,0,768,1464,
+gemini-3.5-flash-lite,general,2,200,5.54,7,490,0,497,953,
+gemini-3.5-flash-lite,general,3,200,7.41,7,630,0,637,1262,
+gemini-3.5-flash-lite,course,1,200,6.73,21,710,0,731,1394,
+gemini-3.5-flash-lite,course,2,200,6.5,21,685,0,706,1310,
+gemini-3.5-flash-lite,course,3,200,9.26,21,501,0,522,944,
+gemini-3.5-flash-lite,short,1,200,5.53,14,1,0,15,2,
+gemini-3.5-flash-lite,short,2,200,4.74,14,1,0,15,2,
+gemini-3.5-flash-lite,short,3,200,5.08,14,1,0,15,2,
+gemini-3.5-flash,general,1,503,7.39,,,,,,This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.
+gemini-3.5-flash,general,2,503,5.42,,,,,,This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.
+gemini-3.5-flash,general,3,200,12.42,7,776,918,1701,1525,
+gemini-3.5-flash,course,1,200,12.45,21,682,1140,1843,1312,
+gemini-3.5-flash,course,2,200,12.61,21,694,1137,1852,1305,
+gemini-3.5-flash,course,3,200,12.35,21,525,1159,1705,987,
+gemini-3.5-flash,short,1,200,1.6,14,1,127,142,2,
+gemini-3.5-flash,short,2,200,1.85,14,1,145,160,2,
+gemini-3.5-flash,short,3,200,1.76,14,1,143,158,2,
+gemini-2.5-flash-lite,general,1,404,0.29,,,,,,This model models/gemini-2.5-flash-lite is no longer available to new users. Please update your code to use models/gemin
+gemini-2.5-flash-lite,general,2,404,0.27,,,,,,This model models/gemini-2.5-flash-lite is no longer available to new users. Please update your code to use models/gemin
+gemini-2.5-flash-lite,general,3,404,0.3,,,,,,This model models/gemini-2.5-flash-lite is no longer available to new users. Please update your code to use models/gemin
+gemini-2.5-flash-lite,course,1,404,0.31,,,,,,This model models/gemini-2.5-flash-lite is no longer available to new users. Please update your code to use models/gemin
+gemini-2.5-flash-lite,course,2,404,0.28,,,,,,This model models/gemini-2.5-flash-lite is no longer available to new users. Please update your code to use models/gemin
+gemini-2.5-flash-lite,course,3,404,0.3,,,,,,This model models/gemini-2.5-flash-lite is no longer available to new users. Please update your code to use models/gemin
+gemini-2.5-flash-lite,short,1,404,0.32,,,,,,This model models/gemini-2.5-flash-lite is no longer available to new users. Please update your code to use models/gemin
+gemini-2.5-flash-lite,short,2,404,0.31,,,,,,This model models/gemini-2.5-flash-lite is no longer available to new users. Please update your code to use models/gemin
+gemini-2.5-flash-lite,short,3,404,0.3,,,,,,This model models/gemini-2.5-flash-lite is no longer available to new users. Please update your code to use models/gemin
+gemini-2.5-flash,general,1,404,0.27,,,,,,This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8
+gemini-2.5-flash,general,2,404,0.3,,,,,,This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8
+gemini-2.5-flash,general,3,404,0.23,,,,,,This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8
+gemini-2.5-flash,course,1,404,0.25,,,,,,This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8
+gemini-2.5-flash,course,2,404,0.24,,,,,,This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8
+gemini-2.5-flash,course,3,404,0.29,,,,,,This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8
+gemini-2.5-flash,short,1,404,0.24,,,,,,This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8
+gemini-2.5-flash,short,2,404,0.26,,,,,,This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8
+gemini-2.5-flash,short,3,404,0.24,,,,,,This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8
+gemma-4-31b-it,general,1,503,73.84,,,,,,This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.
+gemma-4-31b-it,general,2,500,0.46,,,,,,Internal error encountered.
+gemma-4-31b-it,general,3,503,6.55,,,,,,This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.
+gemma-4-31b-it,course,1,500,0.58,,,,,,Internal error encountered.
+gemma-4-31b-it,course,2,500,0.51,,,,,,Internal error encountered.
+gemma-4-31b-it,course,3,200,64.36,21,604,622,1247,1153,
+gemma-4-31b-it,short,1,500,0.48,,,,,,Internal error encountered.
+gemma-4-31b-it,short,2,200,42.39,14,1,79,94,2,
+gemma-4-31b-it,short,3,503,47.06,,,,,,This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.
