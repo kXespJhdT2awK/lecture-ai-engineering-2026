@@ -5,10 +5,14 @@
 """
 
 import json
+import random
+import re
+from datetime import datetime
 from functools import cache
 from pathlib import Path
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
+LOG_DIR = Path(__file__).resolve().parent.parent / "learning_log"
 MAX_RESULTS = 3
 
 
@@ -77,3 +81,41 @@ def get_lecture_summary(lecture: int) -> str:
         available = sorted(p.stem for p in (DATA_DIR / "lectures").glob("*.md"))
         return f"第{lecture}回の要点はまだありません。用意されている回: {', '.join(available)}"
     return path.read_text(encoding="utf-8")
+
+
+def make_quiz(lecture: int) -> str:
+    """指定した回（1始まりの整数）の用語集から確認問題を1問作り、問題と答えを返す。
+
+    「第2回の確認問題を出して」「第3回の理解度をチェックしたい」のように、
+    ある回の内容について問題を出してほしいと頼まれたときに使う。
+    返り値の question をそのまま出題し、answer は利用者が答えるまで見せない。
+    """
+    candidates = [e for e in load_glossary() if e["lecture"] == lecture]
+    if not candidates:
+        available = sorted({e["lecture"] for e in load_glossary()})
+        return f"第{lecture}回の用語は用語集にありません。問題を作れる回: {', '.join(map(str, available))}"
+    entry = random.choice(candidates)
+    return json.dumps(
+        {"question": f"「{entry['term']}」の意味は？", "answer": entry["definition"]},
+        ensure_ascii=False,
+    )
+
+
+def save_learning_log(title: str, content: str) -> str:
+    """学習の記録を learning_log/ フォルダに Markdown ファイルとして保存する。
+
+    利用者が「今の内容を記録して」「学習ログに残して」のように保存を頼んだときだけ使う。
+    頼まれていないのに自分から保存しない。title は記録の短い題名（例: "LoRAとQLoRAの違い"）、
+    content は保存する本文（利用者が学んだことの要点）を入れる。
+    保存してよいかの確認はこのツールの実行前にシステムが利用者に聞くので、
+    保存を頼まれたら、回答の中で「保存しますか？」と聞き返さずに、このツールをそのまま呼ぶ。
+    """
+    title, content = title.strip(), content.strip()
+    if not title or not content:
+        return "title と content の両方を指定してください。保存していません。"
+    LOG_DIR.mkdir(exist_ok=True)
+    now = datetime.now()
+    slug = re.sub(r'[\\/:*?"<>|\s]+', "_", title)[:40].strip("_") or "log"
+    path = LOG_DIR / f"{now:%Y%m%d-%H%M%S}_{slug}.md"
+    path.write_text(f"# {title}\n\n- 保存日時: {now:%Y-%m-%d %H:%M}\n\n{content}\n", encoding="utf-8")
+    return f"learning_log/{path.name} に保存しました。"

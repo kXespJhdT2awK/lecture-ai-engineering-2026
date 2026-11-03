@@ -1,0 +1,19 @@
+##### q1.jsonl
+[tool call] search_glossary {'query': '3レベル'}
+[usage] 540 18
+[text] AIE2026の講座における「3レベル」とは、宿題の構成を表す3つの段階のことです。  具体的には以下の3つのレベルに分かれており、**どれか1つに取り組めばその回の宿題は完了**となります：  1. **基礎**：講義内容の確認 2. *
+[usage] 663 133
+LLM呼び出し回数: 2
+##### q2.jsonl
+[tool call] search_glossary {'query': 'LoRA'}
+[tool call] search_glossary {'query': 'QLoRA'}
+[usage] 529 37
+[text] LoRAとQLoRAの違いは、ベースモデルの重みをそのまま使うか、量子化してメモリを節約するかにあります。  * **LoRA**: 事前学習済みの重みは固定したまま、重みの更新分を表す2つの小さな行列（低ランク行列）だけを学習するPEFT
+[usage] 1085 156
+LLM呼び出し回数: 2
+##### q3.jsonl
+[tool call] make_quiz {'lecture': 2}
+[usage] 530 14
+[text] 第2回の内容から確認問題を1問出します！  **問題：** 「エポック」の意味は？  （答えを考えて教えてくださいね！）  【関連する回】第2回
+[usage] 601 44
+LLM呼び出し回数: 2

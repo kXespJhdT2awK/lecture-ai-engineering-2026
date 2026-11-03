@@ -1,0 +1,19 @@
+[model] gemini-3.5-flash-lite
+RAG（Retrieval-Augmented Generation）とAIエージェントは、AIシステムの拡張において異なるアプローチや役割を持っています。
+
+* **RAG（検索拡張生成）**:
+  質問を受け取った際に、あらかじめ用意された外部のドキュメントやデータベースから関連情報を「検索（Retrieval）」し、その情報をLLM（大規模言語モデル）のコンテキストに含めることで、最新の事実や社内データに基づいた回答を生成する仕組みです。主に「情報の参照・回答」に特化しています。
+
+* **AIエージェント**:
+  LLMが自ら思考し、ツール（Web検索、計算機、ファイル操作など）を選んで実行し、その結果を見て次の行動を決めるという**「ループ（エージェントループ）」**を持って自律的にタスクを遂行する仕組みです。「モデル ＋ ループ ＋ ツール」の構造を持ち、複雑な手順や複数ステップの処理を自動化するのに向いています（第3回）。
+
+つまり、RAGは「外部の知識を使って正確な回答をさせる技術」であり、AIエージェントは「自分で判断して道具を使い、自律的に行動するシステム全体（その中でRAGをツールとして使うこともあります）」を指します。
+
+（関連する回：第3回）
+
+--- trace ---
+[tool call]   search_glossary({'query': 'RAG'})
+[tool call]   search_glossary({'query': 'エージェント'})
+[tool return] search_glossary -> [{"term": "ファインチューニング", "lecture": 2, "definition": "事前学習済みモデルを、特定のタスクや形式に合ったデータで追加学習させること。出力の形式や口調、特定ドメインの振る舞いを身につけさせるの…
+[tool return] search_glossary -> [{"term": "AIエージェント", "lecture": 3, "definition": "LLMが自分で判断してツールを呼び出し、その結果を見てさらに次の行動を決める、というループで目的を達成するシステム。基本構造は「モデル＋ル…
+[usage] RunUsage(cost=Decimal('0.0011871'), details={'text_prompt_tokens': 1307}, input_text_tokens=1307, input_tokens=1307, output_tokens=318, requests=2, tool_calls=2)

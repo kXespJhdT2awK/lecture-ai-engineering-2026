@@ -1,0 +1,23 @@
+                 pydantic-ai v2.57.0 • Python 3.13.7
+      / \
+     /   \       agent: target • model: google:gemini-3.5-flash-lite • tools: 3 • capabilities: 0
+   /___.___\
+  /    |    \    observability: off — see every model and tool call live, with cost
+/      |      \    set it up free with Logfire and a GitHub login: https://pydantic.dev/ai-setup.md
+`---.._|_..---'    or use any OpenTelemetry backend: https://pydantic.dev/docs/ai/logfire/#otel
+
+                 goes away once observability is on — or PYDANTIC_AI_NO_BANNER=1
+[model] gemini-3.5-flash-lite
+それでは、第2回の内容から確認問題を出します！
+
+**問題：**
+「Hugging Face Hub」の意味は？
+
+（答えを知りたいときは「答えを教えて」と聞いてくださいね！）
+
+【関連する回】第2回
+
+--- trace ---
+[tool call]   make_quiz({'lecture': 2})
+[tool return] make_quiz -> {"question": "「Hugging Face Hub」の意味は？", "answer": "公開されたモデルやデータセットを共有・ダウンロードできるプラットフォーム。オープンウェイトのモデルを入手したり、LoRAアダプタを公開した…
+[usage] RunUsage(cost=Decimal('0.0004536'), details={'text_prompt_tokens': 962}, input_text_tokens=962, input_tokens=962, output_tokens=66, requests=2, tool_calls=1)

@@ -1,0 +1,10 @@
+Running agent glossary_agent, type exit to exit.
+[user]: [glossary_agent]: **LoRA**と**QLoRA**の違いは、モデルの重み（パラメータ）をそのまま使うか、量子化してメモリを節約するかという点にあります。
+
+* **LoRA（Low-Rank Adaptation）**
+  * 事前学習済みの重みは固定したまま、更新分を表す小さな低ランク行列だけを学習するPEFT（Parameter-Efficient Fine-Tuning）手法です。学習パラメータや保存ファイルを大幅に削減できます。
+* **QLoRA（Quantized LoRA）**
+  * LoRAの仕組みをベースにしつつ、**ベースモデルの重みを4ビットなどに量子化**してさらにメモリを節約したうえで学習を行う手法です。これにより、より大きなモデルを小さなGPU環境でも扱えるようになります。
+
+関係する回：第2回
+[user]: 

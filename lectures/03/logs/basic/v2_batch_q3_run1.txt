@@ -1,0 +1,38 @@
+[model] gemini-3.5-flash-lite
+RAG（Retrieval-Augmented Generation）とAIエージェントは、どちらもLLMの能力を拡張する重要なアプローチですが、その目的や仕組みには明確な違いがあります。
+
+### 1. RAG（検索拡張生成）
+* **主な目的**：LLMの持っていない最新情報や社内データなどを外部データベースから検索し、その情報をプロンプトに組み込んで回答の精度を上げる仕組みです。
+* **特徴**：基本的には「検索して、その情報をもとに1回回答を作る」という一方向の流れが中心となります。
+
+### 2. AIエージェント
+* **主な目的**：LLMが自ら思考し、ツール（検索機能や計算機、外部APIなど）を自分で選んで呼び出し、その実行結果を見て「次にどうすべきか」を判断・実行するループ（循環）を回しながら目的を達成するシステムです。
+* **特徴**：LLMが自律的に複数回の判断と行動（ループ）を繰り返す点に本質があります（基本構造は「モデル＋ループ＋ツール」）。
+
+---
+
+### まとめると
+* **RAG** は「外部の知識を参照して賢く答える仕組み」
+* **AIエージェント** は「自分で考えて道具を使いこなし、タスクを遂行する仕組み」
+
+※なお、AIエージェントがツールとしてRAG（検索エンジン）を呼び出す、というように両者を組み合わせることもよく行われます。
+
+（関連回：第3回）
+
+--- trace ---
+[tool call]   search_glossary({'query': 'RAG エージェント'})
+[tool return] search_glossary -> [{"term": "AIエージェント", "lecture": 3, "definition": "LLMが自分で判断してツールを呼び出し、その結果を見てさらに次の行動を決める、というループで目的を達成するシステム。基本構造は「モデル＋ル…
+[tool call]   search_glossary({'query': 'RAG'})
+[tool return] search_glossary -> [{"term": "ファインチューニング", "lecture": 2, "definition": "事前学習済みモデルを、特定のタスクや形式に合ったデータで追加学習させること。出力の形式や口調、特定ドメインの振る舞いを身につけさせるの…
+[tool call]   get_lecture_summary({'lecture': 3})
+[tool return] get_lecture_summary -> # 第3回 AIエージェント
+
+## この回のねらい
+
+- AIエージェントの基本構造が「モデル＋ループ＋ツール」であることを理解する
+- Pydantic AIで、ツールを使う学習支援エージェントを自分で作り、動かす
+
+## 要点
+
+1.…
+[usage] RunUsage(cost=Decimal('0.0018049'), details={'text_prompt_tokens': 2833}, input_text_tokens=2833, input_tokens=2833, output_tokens=382, requests=4, tool_calls=3)

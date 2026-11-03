@@ -1,0 +1,10 @@
+Running agent glossary_agent, type exit to exit.
+[user]: [glossary_agent]: 第2回の用語集から確認問題を1問出題します！
+
+**問題：**
+「ファインチューニング」の意味は？
+
+ぜひあなたの言葉で答えてみてくださいね。答えが分かったら教えてください！
+
+（関連：第2回）
+[user]: 

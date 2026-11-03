@@ -1,0 +1,21 @@
+[model] gemini-3.5-flash-lite
+LoRAとQLoRAの違いの要点は以下の通りです。
+
+- **LoRA**
+  - 事前学習済みの重みを固定し、重みの更新分を低ランクの小さな行列（低ランク行列）の積で近似して、その部分だけを学習するPEFT（Parameter-Efficient Fine-Tuning）手法です。学習パラメータや保存ファイルを大幅に削減できます。
+- **QLoRA**
+  - ベースモデルの重みをさらに4ビットなどに量子化（Quantization）してメモリを大きく節約したうえで、LoRAによるファインチューニングを行う手法です。これにより、限られたGPUリソースでもより大規模なモデルを扱えるようになります。
+
+（関連回：第2回）
+
+---
+
+学習ログに「LoRAとQLoRAの違い」として記録いたしますか？ 
+記録をご希望の場合は、その旨をお知らせください。
+
+--- trace ---
+[tool call]   search_glossary({'query': 'LoRA'})
+[tool call]   search_glossary({'query': 'QLoRA'})
+[tool return] search_glossary -> [{"term": "LoRA", "lecture": 2, "definition": "事前学習済みの重みは固定したまま、重みの更新分を2つの小さな行列の積（低ランク行列）で表し、その小さな行列だけを学習するPEFT手法。学習するパラ…
+[tool return] search_glossary -> [{"term": "QLoRA", "lecture": 2, "definition": "ベースモデルの重みを4ビットなどに量子化してメモリを節約したうえで、LoRAで学習する手法。より大きなモデルを小さなGPUで扱える。本講座の第2…
+[usage] RunUsage(cost=Decimal('0.0011141'), details={'text_prompt_tokens': 1822}, input_text_tokens=1822, input_tokens=1822, output_tokens=227, requests=2, tool_calls=2)

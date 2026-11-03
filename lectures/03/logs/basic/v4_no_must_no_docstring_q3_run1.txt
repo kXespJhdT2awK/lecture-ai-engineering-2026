@@ -1,0 +1,22 @@
+[model] gemini-3.5-flash-lite
+用語集によると、それぞれの特徴や定義は以下のとおりです。
+
+* **AIエージェント**（第3回）: LLMが自分で判断してツールを呼び出し、その結果を見てさらに次の行動を決める、というループで目的を達成するシステムです（基本構造は「モデル＋ループ＋ツール」）。
+* **RAG（Retrieval-Augmented Generation）**: 用語集に定義はありませんが、一般的にはLLMに外部の知識ベースやドキュメントを検索（Retrieval）させ、その検索結果をプロンプトに組み込んで回答を生成（Generation）する仕組みを指します。
+
+違いを簡単にまとめると、
+* **RAG**は「外部から必要な情報を探し出して回答に活かす仕組み」です。
+* **AIエージェント**は「LLMが自律的に考え、ツール（検索や計算、ファイル操作など）を使いながら複数ステップの作業を実行する仕組み」です。
+
+なお、エージェントが持つツールの一つとして「検索ツール」を組み込むことで、エージェントがRAG的なアプローチを行うこともあります。
+
+関係する回：第3回
+
+--- trace ---
+[tool call]   search_glossary({'query': 'RAG'})
+[tool call]   search_glossary({'query': 'エージェント'})
+[tool return] search_glossary -> [{"term": "ファインチューニング", "lecture": 2, "definition": "事前学習済みモデルを、特定のタスクや形式に合ったデータで追加学習させること。出力の形式や口調、特定ドメインの振る舞いを身につけさせるの…
+[tool return] search_glossary -> [{"term": "AIエージェント", "lecture": 3, "definition": "LLMが自分で判断してツールを呼び出し、その結果を見てさらに次の行動を決める、というループで目的を達成するシステム。基本構造は「モデル＋ル…
+[tool call]   search_glossary({'query': '検索'})
+[tool return] search_glossary -> [{"term": "ツール（Tool use / Function calling）", "lecture": 3, "definition": "モデルが呼び出せるように用意した関数。モデルはツールの名前・説明・引数の型を見て、必要なと…
+[usage] RunUsage(cost=Decimal('0.0014572'), details={'text_prompt_tokens': 2374}, input_text_tokens=2374, input_tokens=2374, output_tokens=298, requests=3, tool_calls=3)
