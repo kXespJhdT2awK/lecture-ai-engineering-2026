@@ -1,0 +1,17 @@
+Log setup complete: /var/folders/rw/shfdm6s53y342tr52btx1k5c0000gn/T/agents_log/agent.20261103_231124.log
+To access latest log: tail -F /var/folders/rw/shfdm6s53y342tr52btx1k5c0000gn/T/agents_log/agent.latest.log
+/Users/asanosho/.cache/uv/archive-v0/z1Y36x3670J7EV-4/lib/python3.13/site-packages/google/adk/cli/cli.py:351: UserWarning: [EXPERIMENTAL] InMemoryCredentialService: This feature is experimental and may change or be removed in future versions without notice. It may introduce breaking changes at any time.
+  credential_service = InMemoryCredentialService()
+/Users/asanosho/.cache/uv/archive-v0/z1Y36x3670J7EV-4/lib/python3.13/site-packages/google/adk/auth/credential_service/in_memory_credential_service.py:33: UserWarning: [EXPERIMENTAL] BaseCredentialService: This feature is experimental and may change or be removed in future versions without notice. It may introduce breaking changes at any time.
+  super().__init__()
+Running agent glossary_agent, type exit to exit.
+[user]: [glossary_agent]: AIE2026の講座における「3レベル」とは、宿題の構成を表す以下の3つの段階のことです。
+
+1. **基礎**：講義内容の確認
+2. **実装**：自分でコードを書く
+3. **発展**：調査や試行
+
+この3つのレベルの中からどれか1つに取り組めば、その回の宿題は完了となります。原則として採点は行われません。
+
+（関連：第1回）
+[user]: 
