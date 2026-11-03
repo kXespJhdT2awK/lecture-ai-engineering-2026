@@ -1,9 +1,3 @@
-Log setup complete: /var/folders/rw/shfdm6s53y342tr52btx1k5c0000gn/T/agents_log/agent.20261103_231248.log
-To access latest log: tail -F /var/folders/rw/shfdm6s53y342tr52btx1k5c0000gn/T/agents_log/agent.latest.log
-/Users/asanosho/.cache/uv/archive-v0/z1Y36x3670J7EV-4/lib/python3.13/site-packages/google/adk/cli/cli.py:351: UserWarning: [EXPERIMENTAL] InMemoryCredentialService: This feature is experimental and may change or be removed in future versions without notice. It may introduce breaking changes at any time.
-  credential_service = InMemoryCredentialService()
-/Users/asanosho/.cache/uv/archive-v0/z1Y36x3670J7EV-4/lib/python3.13/site-packages/google/adk/auth/credential_service/in_memory_credential_service.py:33: UserWarning: [EXPERIMENTAL] BaseCredentialService: This feature is experimental and may change or be removed in future versions without notice. It may introduce breaking changes at any time.
-  super().__init__()
 Running agent glossary_agent, type exit to exit.
 [user]: [glossary_agent]: 第2回の用語集から確認問題を1問出題します！
 
