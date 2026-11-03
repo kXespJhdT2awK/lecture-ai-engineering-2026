@@ -1,0 +1,16 @@
+[model] gemini-3.5-flash-lite
+講座の用語集を確認したところ、RAG自体の直接的な定義はありませんでしたが、AIエージェントに関する定義が見つかりましたので、それを元に違いを説明します。
+
+* **RAG（Retrieval-Augmented Generation）**: 質問に関連する外部の文書やデータを検索（Retrieval）し、その情報を元にしてLLMが回答を生成する仕組みです。主に「外部知識の参照や事実確認」のために使われます。
+* **AIエージェント**: LLMが自分で判断してツールを呼び出し、その結果を見てさらに次の行動を決める、という「ループ」を回して目的を達成するシステムです（基本構造は「モデル＋ループ＋ツール」）。単に応答を生成するだけでなく、自律的にタスクを遂行します。
+
+つまり、RAGが主に「外部の情報を探して回答の精度を上げる技術」であるのに対し、エージェントは「LLMが自ら考えてツールを使い、一連のタスクを自律的に実行する仕組み」という違いがあります。
+
+関連する回：第3回
+
+--- trace ---
+[tool call]   search_glossary({'query': 'RAG エージェント'})
+[tool return] search_glossary -> [{"term": "AIエージェント", "lecture": 3, "definition": "LLMが自分で判断してツールを呼び出し、その結果を見てさらに次の行動を決める、というループで目的を達成するシステム。基本構造は「モデル＋ル…
+[tool call]   search_glossary({'query': 'RAG'})
+[tool return] search_glossary -> [{"term": "ファインチューニング", "lecture": 2, "definition": "事前学習済みモデルを、特定のタスクや形式に合ったデータで追加学習させること。出力の形式や口調、特定ドメインの振る舞いを身につけさせるの…
+[usage] RunUsage(cost=Decimal('0.0011787'), details={'text_prompt_tokens': 1679}, input_text_tokens=1679, input_tokens=1679, output_tokens=270, requests=3, tool_calls=2)

@@ -1,0 +1,22 @@
+[model] gemini-3.5-flash-lite
+講座の用語集によると、LoRAとQLoRAの違いは以下の通りです。
+
+* **LoRA**
+  事前学習済みの重みは固定したまま、重みの更新分を2つの小さな行列の積（低ランク行列）で表し、その小さな行列だけを学習するPEFT手法です。学習するパラメータが少なく、学習結果（アダプタ）も小さいファイルで保存できます。
+* **QLoRA**
+  ベースモデルの重みを4ビットなどに量子化してメモリを節約したうえで、LoRAで学習する手法です。より大きなモデルを小さなGPUで扱えるようになります。
+
+---
+
+**【確認問題】（第1回より）**
+「システムプロンプト」の意味は？
+（答えはあなたが答えてから確認できます！）
+
+--- trace ---
+[tool call]   search_glossary({'query': 'LoRA'})
+[tool call]   search_glossary({'query': 'QLoRA'})
+[tool call]   make_quiz({'lecture': 1})
+[tool return] search_glossary -> [{"term": "LoRA", "lecture": 2, "definition": "事前学習済みの重みは固定したまま、重みの更新分を2つの小さな行列の積（低ランク行列）で表し、その小さな行列だけを学習するPEFT手法。学習するパラ…
+[tool return] search_glossary -> [{"term": "QLoRA", "lecture": 2, "definition": "ベースモデルの重みを4ビットなどに量子化してメモリを節約したうえで、LoRAで学習する手法。より大きなモデルを小さなGPUで扱える。本講座の第2…
+[tool return] make_quiz -> {"question": "「システムプロンプト」の意味は？", "answer": "利用者の質問とは別に、モデルの振る舞い（役割、口調、守るべきルールなど）を指定する入力。Pydantic AIでは Agent の instructio…
+[usage] RunUsage(cost=Decimal('0.0010148'), details={'text_prompt_tokens': 1516}, input_text_tokens=1516, input_tokens=1516, output_tokens=224, requests=2, tool_calls=3)

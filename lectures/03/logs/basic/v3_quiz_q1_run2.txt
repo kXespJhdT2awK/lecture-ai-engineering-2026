@@ -1,0 +1,23 @@
+[model] gemini-3.5-flash-lite
+**LoRA**と**QLoRA**の主な違いは、ベースモデルの重みを量子化（ビット数を減らすこと）するかどうか、そしてそれによるメモリ使用量の削減効果です。
+
+講座の用語集では、それぞれ次のように定義されています。
+
+* **LoRA（第2回）**
+  事前学習済みの重みは固定したまま、重みの更新分を2つの小さな行列の積（低ランク行列）で表し、その小さな行列だけを学習するPEFT手法です。学習するパラメータが少なく、学習結果も小さなファイルで保存できます。
+* **QLoRA（第2回）**
+  ベースモデルの重みを4ビットなどに**量子化してメモリを節約したうえで、LoRAで学習する手法**です。これにより、より大きなモデルをより小さなGPUで扱えるようになります。
+
+---
+
+### 第2回 確認問題
+「PEFT」の意味は何でしょうか？（考えてみてくださいね！）
+
+--- trace ---
+[tool call]   search_glossary({'query': 'LoRA'})
+[tool call]   search_glossary({'query': 'QLoRA'})
+[tool return] search_glossary -> [{"term": "LoRA", "lecture": 2, "definition": "事前学習済みの重みは固定したまま、重みの更新分を2つの小さな行列の積（低ランク行列）で表し、その小さな行列だけを学習するPEFT手法。学習するパラ…
+[tool return] search_glossary -> [{"term": "QLoRA", "lecture": 2, "definition": "ベースモデルの重みを4ビットなどに量子化してメモリを節約したうえで、LoRAで学習する手法。より大きなモデルを小さなGPUで扱える。本講座の第2…
+[tool call]   make_quiz({'lecture': 2})
+[tool return] make_quiz -> {"question": "「PEFT」の意味は？", "answer": "モデルの全パラメータではなく、ごく一部や追加した小さなパラメータだけを学習する手法の総称。必要なGPUメモリと保存容量を大きく減らせる。LoRAが代表例。"}…
+[usage] RunUsage(cost=Decimal('0.0014002'), details={'text_prompt_tokens': 2509}, input_text_tokens=2509, input_tokens=2509, output_tokens=259, requests=3, tool_calls=3)
