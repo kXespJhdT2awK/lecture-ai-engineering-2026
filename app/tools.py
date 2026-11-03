@@ -6,10 +6,13 @@
 
 import json
 import random
+import re
+from datetime import datetime
 from functools import cache
 from pathlib import Path
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
+LOG_DIR = Path(__file__).resolve().parent.parent / "learning_log"
 MAX_RESULTS = 3
 
 
@@ -96,3 +99,23 @@ def make_quiz(lecture: int) -> str:
         {"question": f"「{entry['term']}」の意味は？", "answer": entry["definition"]},
         ensure_ascii=False,
     )
+
+
+def save_learning_log(title: str, content: str) -> str:
+    """学習の記録を learning_log/ フォルダに Markdown ファイルとして保存する。
+
+    利用者が「今の内容を記録して」「学習ログに残して」のように保存を頼んだときだけ使う。
+    頼まれていないのに自分から保存しない。title は記録の短い題名（例: "LoRAとQLoRAの違い"）、
+    content は保存する本文（利用者が学んだことの要点）を入れる。
+    保存してよいかの確認はこのツールの実行前にシステムが利用者に聞くので、
+    保存を頼まれたら、回答の中で「保存しますか？」と聞き返さずに、このツールをそのまま呼ぶ。
+    """
+    title, content = title.strip(), content.strip()
+    if not title or not content:
+        return "title と content の両方を指定してください。保存していません。"
+    LOG_DIR.mkdir(exist_ok=True)
+    now = datetime.now()
+    slug = re.sub(r'[\\/:*?"<>|\s]+', "_", title)[:40].strip("_") or "log"
+    path = LOG_DIR / f"{now:%Y%m%d-%H%M%S}_{slug}.md"
+    path.write_text(f"# {title}\n\n- 保存日時: {now:%Y-%m-%d %H:%M}\n\n{content}\n", encoding="utf-8")
+    return f"learning_log/{path.name} に保存しました。"
