@@ -1,0 +1,36 @@
+                 pydantic-ai v2.57.0 • Python 3.13.7
+      / \
+     /   \       agent: target • model: google:gemini-3.5-flash-lite • tools: 1 • capabilities: 0
+   /___.___\
+  /    |    \    observability: off — see every model and tool call live, with cost
+/      |      \    set it up free with Logfire and a GitHub login: https://pydantic.dev/ai-setup.md
+`---.._|_..---'    or use any OpenTelemetry backend: https://pydantic.dev/docs/ai/logfire/#otel
+
+                 goes away once observability is on — or PYDANTIC_AI_NO_BANNER=1
+[model] gemini-3.5-flash-lite
+第2回のファインチューニングと第3回のエージェントのメモリは、どちらもAIの動作や応答に影響を与えますが、その仕組みと役割には明確な違いがあります。
+
+### 1. 両者の違い
+* **ファインチューニング（第2回）**
+  * **目的・役割**: モデル自体の「振る舞い（出力形式、口調、手順の守り方など）」を変えるためのものです（第2回・PDF p.46）。モデルの重みパラメータそのものを微調整して書き換えます。
+  * **特徴**: 知識の追加には向いておらず、新しい事実や最新資料を覚えさせようとすると非効率であり、誤り（ハルシネーション）が増えることが指摘されています（第2回・PDF p.46, p.47）。
+* **エージェントのメモリ（第3回）**
+  * **目的・役割**: コンテキストの限界を補うため、過去のやり取りや作業の途中経過、決定事項などを外の保存先（ファイルやデータベースなど）に書き出し、必要なときに読み戻す仕組みです（第3回・PDF p.13, p.39）。
+  * **特徴**: モデルの重み自体を書き換える「学習」ではなく、あくまで外部の記録を一時的・長期的にコンテキストへ出し入れするものです（第3回・PDF p.13「覚えている ≠ 学習」）。
+
+---
+
+### 2. 新しい知識や資料の内容を使わせたいときはどうするか？
+講義資料では、**「知識ならまず検索（RAG）」**を使うと説明されています（第2回・PDF p.46）。
+
+* 知識や新しい事実、最新の資料などをモデルに反映させたい場合、ファインチューニングで無理に覚えさせようとするのは非効率であり、誤りが増える原因になります（第2回・PDF p.46）。
+* そのため、外部の知識ベースや資料から必要な情報を検索してプロンプトに組み込む**RAG（Retrieval-Augmented Generation）**を活用するのが基本線となります（第2回・PDF p.46, p.47）。
+
+--- trace ---
+[tool call]   search_materials({'query': 'ファインチューニング メモリ 新しい知識'})
+[tool return] search_materials -> {"results": [{"page_id": "lec02-main-p046", "document_id": "lec02-main", "lecture": 2, "document_title": "基盤モデルの仕組み", "s…
+[tool call]   search_materials({'query': '第3回 エージェント メモリ'})
+[tool return] search_materials -> {"results": [{"page_id": "lec03-main-p013", "document_id": "lec03-main", "lecture": 3, "document_title": "AIエージェント", "se…
+[time] 回答完了まで 5.60 秒（検索・埋め込みを含む）
+[usage] 入力 6,602 tokens / 出力 523 tokens / モデル応答 3 回
+[cost] 生成APIの推定コスト: $0.003288 USD（埋め込み・索引構築分は含まない）

@@ -1,0 +1,42 @@
+                 pydantic-ai v2.57.0 • Python 3.13.7
+      / \
+     /   \       agent: target • model: google:gemini-3.5-flash-lite • tools: 1 • capabilities: 0
+   /___.___\
+  /    |    \    observability: off — see every model and tool call live, with cost
+/      |      \    set it up free with Logfire and a GitHub login: https://pydantic.dev/ai-setup.md
+`---.._|_..---'    or use any OpenTelemetry backend: https://pydantic.dev/docs/ai/logfire/#otel
+
+                 goes away once observability is on — or PYDANTIC_AI_NO_BANNER=1
+[model] gemini-3.5-flash-lite
+第2回のファインチューニングと第3回のエージェントのメモリは、どちらもAIの動作や応答に影響を与える仕組みですが、**「モデルの重みを書き換える（学習する）か、外部の保存先から情報を読み込む（記憶する）か」**という点で大きな違いがあります。
+
+講義では、両者の違いや新しい知識を使わせる方法について以下のように説明されています。
+
+### 1. ファインチューニング（第2回）とメモリ（第3回）の違い
+
+* **ファインチューニング（FT）**
+  * **目的・得意なこと**: モデルの「振る舞い」（出力形式、口調、手順の守り方など）を直すのに向いています（第2回・PDF p.46）。
+  * **特徴**: データの傾向や手本を学習させて**モデルの重み自体を更新**します。ただし、新しい事実や最新の資料といった「知識」の追加には不向きであり、FTで知識を覚えさせようとすると非効率で、誤り（ハルシネーション）が増えることが研究でも報告されています（第2回・PDF p.46, 47）。
+* **エージェントのメモリ**
+  * **目的・得意なこと**: セッションをまたいで過去のやり取りや作業の経緯（「何があったか」）を保持するために使います（第3回・PDF p.13, 39）。
+  * **特徴**: モデルの重みを変えるのではなく、外部の保存先（ファイルやデータベースなど）にテキストとして書き出し、必要に応じて次のコンテキストに読み戻す仕組みです（第3回・PDF p.13）。講義では**「覚えている $\neq$ 学習」**と明記されています（第3回・PDF p.13）。
+
+---
+
+### 2. 新しい知識や資料の内容を使わせたいときはどうするか
+
+講義では、新しい事実や最新の資料などの**「知識」**を使わせたい場合、ファインチューニングで覚えさせるのではなく、**まず検索（RAG：Retrieval-Augmented Generation）を使うべき**だと説明されています（第2回・PDF p.46）。
+
+* **「振る舞いはプロンプトやFT、知識ならまず検索（RAG）」**という基本線が示されています（第2回・PDF p.46）。
+* クイズの解説等でも、新しい内容や毎年変わる情報はFTではなくRAGで対応すべきものとして扱われています（第2回・PDF p.57）。
+
+新しい知識や資料をAIに参照させたいときは、モデル自身に暗記させる（FTする）のではなく、外部の資料から該当箇所を検索してプロンプトに組み込む**RAGの仕組み**を利用するのが基本となります。
+
+--- trace ---
+[tool call]   search_materials({'query': 'ファインチューニング メモリ 新しい知識'})
+[tool return] search_materials -> {"results": [{"page_id": "lec02-main-p046", "document_id": "lec02-main", "lecture": 2, "document_title": "基盤モデルの仕組み", "s…
+[tool call]   search_materials({'query': '第3回 エージェント メモリ'})
+[tool return] search_materials -> {"results": [{"page_id": "lec03-main-p013", "document_id": "lec03-main", "lecture": 3, "document_title": "AIエージェント", "se…
+[time] 回答完了まで 5.73 秒（検索・埋め込みを含む）
+[usage] 入力 6,602 tokens / 出力 655 tokens / モデル応答 3 回
+[cost] 生成APIの推定コスト: $0.003618 USD（埋め込み・索引構築分は含まない）

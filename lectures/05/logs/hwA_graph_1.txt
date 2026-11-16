@@ -1,0 +1,38 @@
+                 pydantic-ai v2.57.0 • Python 3.13.7
+      / \
+     /   \       agent: target • model: google:gemini-3.5-flash-lite • tools: 1 • capabilities: 0
+   /___.___\
+  /    |    \    observability: off — see every model and tool call live, with cost
+/      |      \    set it up free with Logfire and a GitHub login: https://pydantic.dev/ai-setup.md
+`---.._|_..---'    or use any OpenTelemetry backend: https://pydantic.dev/docs/ai/logfire/#otel
+
+                 goes away once observability is on — or PYDANTIC_AI_NO_BANNER=1
+[model] gemini-3.5-flash-lite
+第2回のファインチューニング（FT）と第3回のエージェントのメモリは、どちらもAIに情報を結びつける仕組みに見えますが、**「何を覚えさせるか（目的）」**と**「どこに保存してどう読み込ませるか（仕組み）」**が異なります。
+
+### 1. ファインチューニング（第2回）とメモリ（第3回）の違い
+
+* **ファインチューニング（第2回）**
+  * **目的：** モデルの「振る舞い（出力形式・口調・手順の守り方など）」を定着させるために使います（第2回・PDF p.46）。
+  * **特徴：** 新しい知識や事実を覚えさせるのには向いておらず、無理に覚えさせようとすると誤り（ハルシネーション）が増えることが指摘されています（第2回・PDF p.46）。モデル自体の重みを書き換えるため、一度学習させると後から情報の変更や削除が難しくなります。
+* **エージェントのメモリ（第3回）**
+  * **目的：** 「何があったか（過去のチャットのやり取りや要点）」や「どうやるか（作業の手順）」といった**動的な情報や記録**を外の保存先（ファイルやデータベースなど）に残すために使います（第3回・PDF p.13, p.41）。
+  * **特徴：** モデルの重み自体は書き換えません。必要なときに外の保存先から情報を読み出し、コンテキスト（プロンプト等）に再注入してモデルに渡します（第3回・PDF p.13, p.65）。これにより、セッションをまたいで過去の文脈を引き継ぐことができます（第3回・PDF p.65）。
+
+---
+
+### 2. 新しい知識や資料の内容を使わせたいときはどうするか
+
+講義では、新しい知識や最新の資料の内容をAIに使わせたい場合、**「FTではなく検索（RAG）を使うべきである」**と説明されています。
+
+* **理由：** 「振る舞いはプロンプトで直らなければFine-Tuning、知識ならまず検索（RAG）」という原則があり、新しい事実や最新資料などの知識をFTで直接覚えさせるのは非効率であり、誤りが増える原因になるためです（第2回・PDF p.46）。
+* **対応策：** 外部の資料やデータベースから必要な情報を検索し、その内容をコンテキストに含めてモデルに回答させる仕組み（RAG）を活用します（第2回・PDF p.46, p.47）。
+
+--- trace ---
+[tool call]   search_graph({'query': 'ファインチューニング エージェント メモリ 新しい知識'})
+[tool return] search_graph -> {"seeds": [{"page_id": "lec03-main-p013", "document_id": "lec03-main", "lecture": 3, "document_title": "AIエージェント", "sect…
+[tool call]   search_graph({'query': 'ファインチューニング 新しい知識 資料'})
+[tool return] search_graph -> {"seeds": [{"page_id": "lec02-main-p046", "document_id": "lec02-main", "lecture": 2, "document_title": "基盤モデルの仕組み", "sec…
+[time] 回答完了まで 5.75 秒（検索・埋め込みを含む）
+[usage] 入力 13,514 tokens / 出力 629 tokens / モデル応答 3 回
+[cost] 生成APIの推定コスト: $0.004528 USD（埋め込み・索引構築分は含まない）

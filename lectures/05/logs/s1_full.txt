@@ -1,0 +1,28 @@
+                 pydantic-ai v2.57.0 • Python 3.13.7
+      / \
+     /   \       agent: agent • model: google:gemini-3.5-flash-lite • tools: 0 • capabilities: 0
+   /___.___\
+  /    |    \    observability: off — see every model and tool call live, with cost
+/      |      \    set it up free with Logfire and a GitHub login: https://pydantic.dev/ai-setup.md
+`---.._|_..---'    or use any OpenTelemetry backend: https://pydantic.dev/docs/ai/logfire/#otel
+
+                 goes away once observability is on — or PYDANTIC_AI_NO_BANNER=1
+[model] gemini-3.5-flash-lite
+[full-context] 入力227,971文字
+ご質問ありがとうございます。
+
+LoRAとQLoRAの学習対象および仕組みの違いについては、以下の資料に記載されています。
+
+- **資料:** `lec02-main / 基盤モデルの仕組み`
+- **PDFページ番号:** p.51、p.52
+
+具体的な考え方のヒントは以下の通りです。
+* **LoRA:** 基盤モデルの本体の重みは固定したまま、どのような部分（パラメータ）だけを学習するかを確認してみましょう（ヒント：小さな行列を追加して、その変化分を学習します）。
+* **QLoRA:** LoRAの仕組みに何を組み合わせることで、さらに少ないメモリで大きなモデルの調整を可能にしているかを見てみましょう（ヒント：4bitへの圧縮技術が関係しています）。
+
+これらのページを確認して、何が固定され、何が追加されるのかを整理してみてください。
+
+--- trace ---
+[time] 回答完了まで 3.90 秒（検索・埋め込みを含む）
+[usage] 入力 117,025 tokens / 出力 183 tokens / モデル応答 1 回
+[cost] 生成APIの推定コスト: $0.035565 USD（埋め込み・索引構築分は含まない）

@@ -126,3 +126,21 @@ def search_graph(query: str) -> str:
         return json.dumps({"error": str(e)}, ensure_ascii=False)
     except APIError as e:
         return json.dumps({"error": api_error_message(e.code)}, ensure_ascii=False)
+
+
+def search_bridge(query: str) -> str:
+    """講義をまたぐ質問のために、講義ごとに近いページ・講義間で参照し合うページ・用語に触れるページを返す。
+
+    queryに調べたい内容を指定する。比べたい用語や「第N回」を含めると、その講義からもページを取る。
+    各ページのreasonsに選ばれた理由、pathに講義・章・タイトルが入る。
+    """
+    import sqlite3
+    from google.genai.errors import APIError
+    from app.retrieval import search_bridge as search
+
+    try:
+        return json.dumps(search(query), ensure_ascii=False)
+    except (ValueError, OSError, sqlite3.Error) as e:
+        return json.dumps({"error": str(e)}, ensure_ascii=False)
+    except APIError as e:
+        return json.dumps({"error": api_error_message(e.code)}, ensure_ascii=False)

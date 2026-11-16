@@ -18,6 +18,8 @@ from app.config import (
     EMBEDDING_DIMENSIONS, EMBEDDING_MAX_TOKENS, EMBEDDING_MODEL,
     RAG_DB, RAG_DOCUMENT_IDS, RAG_SOURCE, RAG_TOP_K, RAG_TREE, get_api_key,
     RAG_GRAPH, GRAPH_START_K, GRAPH_HOPS, GRAPH_MAX_RESULTS,
+    BRIDGE_TOP_K, BRIDGE_PER_LECTURE, BRIDGE_LECTURE_MARGIN, BRIDGE_LINKS,
+    BRIDGE_MAX_TERMS, BRIDGE_MAX_RESULTS,
 )
 
 
@@ -183,6 +185,110 @@ def search_graph(query: str) -> dict:
     expanded = [candidate for _, candidate in sorted(candidates.values())]
     return {"seeds": results, "expanded": expanded[:max(0, GRAPH_MAX_RESULTS - len(results))],
             "max_hops": GRAPH_HOPS}
+
+
+LECTURE_REF = re.compile(r"第\s*(\d+)\s*回")
+
+
+def lecture_references(page: dict) -> set[int]:
+    """ページ本文が「第N回」で参照している、対象範囲内の別の講義番号。"""
+    in_scope = {int(document_id[3:5]) for document_id in RAG_DOCUMENT_IDS}
+    refs = {int(n) for n in LECTURE_REF.findall(page["content"])}
+    if page["title"].startswith("次回"):
+        refs.add(page["lecture"] + 1)
+    return (refs - {page["lecture"]}) & in_scope
+
+
+def find_terms(query: str, graph: dict) -> list[dict]:
+    """質問に別名が含まれる用語ノードを返す。英字の短い別名（FT・PRなど）は単語単位で照合する。"""
+    found = []
+    for node in graph["nodes"]:
+        if node["kind"] != "term":
+            continue
+        for alias in node.get("aliases", []) + [node["title"]]:
+            if len(alias) < 2:
+                continue
+            if re.fullmatch(r"[A-Za-z]{2,3}", alias):
+                hit = re.search(rf"(?<![A-Za-z]){re.escape(alias)}(?![A-Za-z])", query)
+            else:
+                hit = alias.casefold() in query.casefold()
+            if hit:
+                found.append(node)
+                break
+    return found
+
+
+def search_bridge(query: str) -> dict:
+    """講義をまたぐ質問向けの取得。目次の講義単位で候補を分け、講義間の参照と用語でつなぐ。
+
+    1. 質問を1回だけ埋め込み、対象214ページ全部との距離を検索DBの埋め込みで計算する。
+       通常のベクトル検索と同じ上位BRIDGE_TOP_K件は必ず入れる
+    2. 対象の講義を決める：質問に「第N回」がある回と、最良距離との差がBRIDGE_LECTURE_MARGIN以内の講義
+    3. 講義ごとに近いページを入れる（片方の講義だけに偏らないようにする）
+    4. 対象の講義どうしを「第N回」「次回」で参照しているページを、講義間の橋として入れる
+    5. 質問に含まれる用語（graph.jsonの用語ノード）ごとに、その用語に触れる最も近いページを入れる
+    """
+    if not isinstance(query, str) or not query.strip():
+        raise ValueError("検索語が空です。")
+    pages = {page["page_id"]: page for page in load_pages(RAG_SOURCE)}
+    graph = json.loads(RAG_GRAPH.read_text(encoding="utf-8"))
+    with open_index(RAG_DB) as db:
+        vector = embed_text(query.strip(), "RETRIEVAL_QUERY")
+        rows = db.execute("SELECT page_id, vec_distance_cosine(embedding, ?) AS distance FROM chunks",
+                          (sqlite_vec.serialize_float32(vector),))
+        distance = {row["page_id"]: row["distance"] for row in rows if row["page_id"] in pages}
+    ranked = sorted(distance, key=lambda page_id: (distance[page_id], page_id))
+    if not ranked:
+        raise ValueError("検索DBに対象ページがありません。")
+
+    in_scope = {int(document_id[3:5]) for document_id in RAG_DOCUMENT_IDS}
+    named = {int(n) for n in LECTURE_REF.findall(query)} & in_scope
+    best = {}
+    for page_id in ranked:
+        best.setdefault(pages[page_id]["lecture"], distance[page_id])
+    top = distance[ranked[0]]
+    lectures = named | {lecture for lecture, d in best.items() if d <= top + BRIDGE_LECTURE_MARGIN}
+
+    reasons: dict[str, list[str]] = {}
+    order: list[str] = []
+
+    def add(page_id: str, reason: str) -> None:
+        if page_id not in reasons:
+            reasons[page_id] = []
+            order.append(page_id)
+        reasons[page_id].append(reason)
+
+    # 通常のベクトル検索と同じ上位を先に入れ、その上に講義・参照・用語で足す（上限で切るのは足した側）
+    for page_id in ranked[:BRIDGE_TOP_K]:
+        add(page_id, "講義を問わず質問に近い")
+
+    for lecture in sorted(lectures):
+        for page_id in [p for p in ranked if pages[p]["lecture"] == lecture][:BRIDGE_PER_LECTURE]:
+            add(page_id, f"第{lecture}回の中で質問に近い")
+    if len(lectures) >= 2:
+        links = [p for p in ranked if pages[p]["lecture"] in lectures
+                 and lecture_references(pages[p]) & (lectures - {pages[p]["lecture"]})]
+        for page_id in links[:BRIDGE_LINKS]:
+            refs = "・".join(f"第{n}回" for n in sorted(lecture_references(pages[page_id]) & lectures))
+            add(page_id, f"第{pages[page_id]['lecture']}回から{refs}を参照するページ")
+    terms = find_terms(query, graph)[:BRIDGE_MAX_TERMS]
+    mentions = defaultdict(set)
+    for edge in graph["edges"]:
+        if edge["relation"] == "mentions":
+            mentions[edge["target"]].add(edge["source"])
+    for term in terms:
+        candidates = [p for p in ranked if p in mentions[term["id"]]
+                      and (not lectures or pages[p]["lecture"] in lectures)]
+        if candidates:
+            add(candidates[0], f"用語「{term['title']}」に触れるページで質問に近い")
+
+    chosen = order[:BRIDGE_MAX_RESULTS]
+    results = []
+    for page_id in sorted(chosen, key=lambda p: (pages[p]["lecture"], pages[p]["page"])):
+        page = pages[page_id]
+        results.append({**page, "distance": distance[page_id], "reasons": reasons[page_id],
+                        "path": f"第{page['lecture']}回 {page['document_title']} > {page['section']} > {page['title']}"})
+    return {"lectures": sorted(lectures), "terms": [term["title"] for term in terms], "pages": results}
 
 
 
