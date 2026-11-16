@@ -22,6 +22,13 @@ RAG_TOP_K = 5
 GRAPH_START_K = 3
 GRAPH_HOPS = 2
 GRAPH_MAX_RESULTS = 10
+# 第5回 宿題（発展）: 講義をまたぐ質問用の取得（retrieval.search_bridge）
+BRIDGE_TOP_K = 5            # 講義を問わず、質問に近い順に入れる件数（通常のベクトル検索と同じ5件を必ず含む）
+BRIDGE_PER_LECTURE = 2      # 対象の講義ごとに、質問に近い順に入れる件数
+BRIDGE_LECTURE_MARGIN = 0.05  # 質問中の「第N回」に加え、最良距離からこの差までの講義を対象にする
+BRIDGE_LINKS = 2            # 対象の講義どうしを「第N回」で参照しているページの件数
+BRIDGE_MAX_TERMS = 3        # 質問から拾う用語の数（用語ごとに1ページ）
+BRIDGE_MAX_RESULTS = 8
 EMBEDDING_MODEL = "gemini-embedding-001"
 EMBEDDING_DIMENSIONS = 768
 # 2,048トークンの上限に対し、タスク指定等の分を残す。超過時は切り捨てず停止する。

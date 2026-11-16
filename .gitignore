@@ -15,3 +15,5 @@ learning_log/
 
 # 第5回: 資料から再生成する検索DB
 .cache/rag/
+# 第5回 宿題の質問埋め込みキャッシュ
+lectures/05/qvec.pkl
