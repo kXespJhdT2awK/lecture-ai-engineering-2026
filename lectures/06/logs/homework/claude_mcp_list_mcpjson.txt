@@ -1,0 +1,8 @@
+# 実行: 演習の app/mcp_servers.json（STEP 4 の状態）を .mcp.json という名前で空のディレクトリにコピーし、claude mcp list を実行（Claude Code 2.1.292、2026-11-23）
+# 自分のユーザー設定のサーバーの行は省き、.mcp.json に関係する行だけを残した。作業ディレクトリのパスは <dir> に置き換えた
+glossary: uv run python -m app.mcp_server - ⏸ Pending approval (run `claude` to approve)
+fetch: uvx mcp-server-fetch==2026.11.11 --no-readability-js - ⏸ Pending approval (run `claude` to approve)
+MCP config diagnostics ⚠
+[Contains warnings] Project config (shared via .mcp.json)
+Location: <dir>/.mcp.json
+ └ [Warning] [aws] mcpServers.aws: Skipped — MCP server "aws" has a "url" but no "type"; add "type": "http" (or "sse" / "ws") to this entry

@@ -1,0 +1,64 @@
+{
+  "command": "claude -p --model haiku --max-turns 1 --strict-mcp-config --mcp-config <設定ファイル> --output-format stream-json --verbose \"OKとだけ返して\"（リポジトリのルートで実行、2026-11-23）",
+  "note": "stream-json の system/init イベントから MCP に関する項目だけを抜き出した",
+  "runs": [
+    {
+      "run": "演習の app/mcp_servers.json をそのまま --mcp-config に渡した",
+      "claude_code_version": "2.1.292",
+      "mcp_servers": [
+        {
+          "name": "glossary",
+          "status": "connected",
+          "source": "dynamic"
+        },
+        {
+          "name": "fetch",
+          "status": "connected",
+          "source": "dynamic"
+        }
+      ],
+      "mcp_server_errors": [
+        {
+          "name": "aws",
+          "type": "url_missing_type",
+          "message": "Skipped — MCP server \"aws\" has a \"url\" but no \"type\"; add \"type\": \"http\" (or \"sse\" / \"ws\") to this entry"
+        }
+      ],
+      "mcp_tools": [
+        "mcp__fetch__fetch",
+        "mcp__glossary__search_glossary"
+      ]
+    },
+    {
+      "run": "aws に \"type\": \"http\" を足した mcp_servers_typed.json を --mcp-config に渡した",
+      "claude_code_version": "2.1.292",
+      "mcp_servers": [
+        {
+          "name": "glossary",
+          "status": "connected",
+          "source": "dynamic"
+        },
+        {
+          "name": "fetch",
+          "status": "connected",
+          "source": "dynamic"
+        },
+        {
+          "name": "aws",
+          "status": "connected",
+          "source": "dynamic"
+        }
+      ],
+      "mcp_server_errors": null,
+      "mcp_tools": [
+        "mcp__aws__aws___get_regional_availability",
+        "mcp__aws__aws___list_regions",
+        "mcp__aws__aws___read_documentation",
+        "mcp__aws__aws___retrieve_skill",
+        "mcp__aws__aws___search_documentation",
+        "mcp__fetch__fetch",
+        "mcp__glossary__search_glossary"
+      ]
+    }
+  ]
+}
